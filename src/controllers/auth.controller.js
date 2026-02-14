@@ -35,10 +35,9 @@ async function registerController(req, res) {
     { expiresIn: "1d" },
   );
 
-  res.cookie("jwt_token", token, {
+  res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    secure: false,
   });
 
   res.status(201).json({
@@ -80,10 +79,9 @@ async function loginController(req, res) {
     { expiresIn: "1d" },
   );
 
-  res.cookie("jwt_token", token, {
+  res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    secure: false,
   });
 
   res.status(201).json({
