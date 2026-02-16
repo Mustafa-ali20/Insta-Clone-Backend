@@ -1,51 +1,42 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Logo from '../components/common/Logo'
 import RegisterForm from '../components/auth/RegisterForm'
 
 const Register = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-ig-gray-50 px-4 py-8">
-      <div className="w-full max-w-[350px]">
-        <div className="bg-white border border-ig-gray-300 px-10 py-10 mb-3 animate-fade-in">
-          <div className="flex justify-center mb-4">
-            <Logo size="large" />
-          </div>
+    <div className="min-h-screen flex items-center justify-center bg-[#152126] px-4 py-8">
+      <div className="w-full max-w-[500px]">
+        {/* Back Button */}
+        <Link to="/login" className="text-white mb-6 hover:opacity-80 transition-opacity inline-block">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </Link>
 
-          <p className="text-ig-gray-500 font-semibold text-center mb-6 text-base">
+        {/* Meta Logo */}
+        <div className="mb-6">
+          <svg className="w-20 h-auto text-white" viewBox="0 0 100 24" fill="currentColor">
+            <path d="M4.009 23.238V7.762h2.88l4.319 10.11 4.319-10.11h2.88v15.476h-2.88V11.81l-3.36 7.905h-1.918l-3.36-7.905v11.428H4.009zm19.2 0V7.762h8.64v2.88h-5.76v3.36h5.76v2.88h-5.76v3.36h5.76v2.88h-8.64zm16.8 0V10.642h-4.8V7.762h12.48v2.88h-4.8v12.596h-2.88zm18.24 0l-1.44-3.84h-6.24l-1.44 3.84h-3.36l6.24-15.476h3.36l6.24 15.476h-3.36zm-7.2-6.72h4.32l-2.16-5.76-2.16 5.76z"/>
+          </svg>
+        </div>
+
+        {/* Title and Description */}
+        <div className="mb-8">
+          <h1 className="text-white text-2xl font-normal mb-2">Get started on Instagram</h1>
+          <p className="text-zinc-400 text-sm">
             Sign up to see photos and videos from your friends.
           </p>
-
-          <RegisterForm />
         </div>
 
-        <div className="bg-white border border-ig-gray-300 px-10 py-6 text-center text-sm animate-fade-in animate-delay-100">
-          <span className="text-ig-gray-700">Have an account? </span>
-          <Link to="/login" className="text-ig-primary font-semibold hover:text-ig-secondary transition-colors">
-            Log in
-          </Link>
-        </div>
-
-        <div className="text-center mt-4 animate-fade-in animate-delay-200">
-          <p className="text-sm text-ig-gray-700 mb-4">Get the app.</p>
-          <div className="flex gap-2 justify-center">
-            <img 
-              src="https://static.cdninstagram.com/rsrc.php/v3/yz/r/c5Rp7Ym-Klz.png" 
-              alt="Get it on Google Play"
-              className="h-10 cursor-pointer hover:opacity-80 transition-opacity"
-            />
-            <img 
-              src="https://static.cdninstagram.com/rsrc.php/v3/yu/r/EHY6QnZYdNX.png" 
-              alt="Get it from Microsoft"
-              className="h-10 cursor-pointer hover:opacity-80 transition-opacity"
-            />
-          </div>
-        </div>
+        {/* Form */}
+        <RegisterForm />
+       
       </div>
 
-      <footer className="fixed bottom-0 left-0 right-0 bg-ig-gray-50 py-4">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-4 text-xs text-ig-gray-500 mb-3">
+      {/* Footer */}
+      <footer className="fixed bottom-0 left-0 right-0 bg-[#152126] py-4">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-3 text-xs text-zinc-500 mb-2">
             <a href="#" className="hover:underline">Meta</a>
             <a href="#" className="hover:underline">About</a>
             <a href="#" className="hover:underline">Blog</a>
@@ -56,11 +47,10 @@ const Register = () => {
             <a href="#" className="hover:underline">Terms</a>
             <a href="#" className="hover:underline">Locations</a>
             <a href="#" className="hover:underline">Instagram Lite</a>
-            <a href="#" className="hover:underline">Threads</a>
             <a href="#" className="hover:underline">Contact Uploading & Non-Users</a>
             <a href="#" className="hover:underline">Meta Verified</a>
           </div>
-          <div className="flex justify-center gap-4 text-xs text-ig-gray-500">
+          <div className="flex justify-center gap-3 text-xs text-zinc-500">
             <span>English</span>
             <span>© 2026 Instagram from Meta</span>
           </div>
