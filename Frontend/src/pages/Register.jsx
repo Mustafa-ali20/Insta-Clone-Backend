@@ -5,7 +5,7 @@ import RegisterForm from '../components/auth/RegisterForm'
 const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#152126] px-4 py-8">
-      <div className="w-full max-w-[500px]">
+      <div className="w-full max-w-125">
         {/* Back Button */}
         <Link to="/login" className="text-white mb-6 hover:opacity-80 transition-opacity inline-block">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
