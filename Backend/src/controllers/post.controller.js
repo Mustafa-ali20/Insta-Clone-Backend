@@ -2,8 +2,8 @@ const postModel = require("../models/post.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
 
-const imagekit = new ImageKit({ 
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY 
+const imagekit = new ImageKit({
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
 });
 
 // Create post
@@ -31,7 +31,7 @@ async function createPostController(req, res) {
     const post = await postModel.create({
       caption: caption.trim(),
       imgUrl: uploadedFile.url,
-      user: req.userId, // From auth middleware
+      user: req.user.id, // From auth middleware
     });
 
     res.status(201).json({
@@ -40,9 +40,9 @@ async function createPostController(req, res) {
     });
   } catch (error) {
     console.error("Create post error:", error);
-    res.status(500).json({ 
-      message: "Failed to create post", 
-      error: error.message 
+    res.status(500).json({
+      message: "Failed to create post",
+      error: error.message,
     });
   }
 }
@@ -51,7 +51,7 @@ async function createPostController(req, res) {
 async function getPostController(req, res) {
   try {
     const posts = await postModel
-      .find({ user: req.userId })
+      .find({ user: req.user.id })
       .sort({ createdAt: -1 }); // Newest first
 
     res.status(200).json({
@@ -60,9 +60,9 @@ async function getPostController(req, res) {
     });
   } catch (error) {
     console.error("Get posts error:", error);
-    res.status(500).json({ 
-      message: "Failed to fetch posts", 
-      error: error.message 
+    res.status(500).json({
+      message: "Failed to fetch posts",
+      error: error.message,
     });
   }
 }
@@ -77,9 +77,9 @@ async function getPostDetailsController(req, res) {
     });
   } catch (error) {
     console.error("Get post details error:", error);
-    res.status(500).json({ 
-      message: "Failed to fetch post", 
-      error: error.message 
+    res.status(500).json({
+      message: "Failed to fetch post",
+      error: error.message,
     });
   }
 }
@@ -88,7 +88,7 @@ async function getPostDetailsController(req, res) {
 async function deletePostController(req, res) {
   try {
     const postId = req.params.postId;
-    
+
     await postModel.findByIdAndDelete(postId);
 
     res.status(200).json({
@@ -96,9 +96,9 @@ async function deletePostController(req, res) {
     });
   } catch (error) {
     console.error("Delete post error:", error);
-    res.status(500).json({ 
-      message: "Failed to delete post", 
-      error: error.message 
+    res.status(500).json({
+      message: "Failed to delete post",
+      error: error.message,
     });
   }
 }
@@ -116,7 +116,7 @@ async function updatePostController(req, res) {
     const updatedPost = await postModel.findByIdAndUpdate(
       postId,
       { caption: caption.trim() },
-      { new: true } // Return updated document
+      { new: true }, // Return updated document
     );
 
     res.status(200).json({
@@ -125,9 +125,9 @@ async function updatePostController(req, res) {
     });
   } catch (error) {
     console.error("Update post error:", error);
-    res.status(500).json({ 
-      message: "Failed to update post", 
-      error: error.message 
+    res.status(500).json({
+      message: "Failed to update post",
+      error: error.message,
     });
   }
 }

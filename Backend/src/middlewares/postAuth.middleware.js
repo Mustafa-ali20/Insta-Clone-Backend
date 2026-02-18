@@ -11,7 +11,7 @@ async function authorizePostOwner(req, res, next) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    if (post.user.toString() !== req.userId) {
+    if (post.user.toString() !== req.user.id) {
       return res.status(403).json({ message: "Forbidden Content" });
     }
 

@@ -29,6 +29,7 @@ postRouter.get(
   getPostDetailsController,
 );
 postRouter.delete("/:postId", authorizePostOwner, deletePostController);
+
 postRouter.patch(
   "/:postId",
   upload.single("image"),
