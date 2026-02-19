@@ -3,18 +3,30 @@ const mongoose = require("mongoose");
 const followSchema = new mongoose.Schema(
   {
     follower: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId, // ✅ Changed from String
+      ref: "users", // ✅ Must match your model name
+      required: true,
     },
     followee: {
+      type: mongoose.Schema.Types.ObjectId, // ✅ Changed from String
+      ref: "users", // ✅ Must match your model name
+      required: true,
+    },
+    status: {
       type: String,
+      default: "pending",
+      enum: {
+        values: ["pending", "accepted", "rejected"],
+        message: "status can only be pending, accepted, or rejected",
+      },
     },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-followSchema.index({ followe: 1, follow: 1 }, { unique: true }); // this is to make sure user follow another user only once
+followSchema.index({ follower: 1, followee: 1 }, { unique: true });
 
 const followModel = mongoose.model("follows", followSchema);
 module.exports = followModel;

@@ -1,6 +1,7 @@
 const postModel = require("../models/post.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
+const likeModel = require("../models/like.model");
 
 const imagekit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
@@ -132,10 +133,67 @@ async function updatePostController(req, res) {
   }
 }
 
+async function toggleLikeController(req, res) {
+  try {
+    const userId = req.user.id; // Better to use ID instead of username
+    const postId = req.params.postId;
+
+    // Check if post exists
+    const post = await postModel.findById(postId);
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
+
+    // Check if already liked
+    const existingLike = await likeModel.findOne({
+      post: postId,
+      user: userId, // Use user ID for consistency
+    });
+
+    if (existingLike) {
+      // Unlike
+      await likeModel.findByIdAndDelete(existingLike._id);
+
+      // Get updated like count
+      const likeCount = await likeModel.countDocuments({ post: postId });
+
+      return res.status(200).json({
+        message: "Post unliked successfully",
+        liked: false,
+        likeCount, // ✅ Send back total likes
+      });
+    } else {
+      // Like
+      await likeModel.create({
+        post: postId,
+        user: userId,
+      });
+
+      // Get updated like count
+      const likeCount = await likeModel.countDocuments({ post: postId });
+
+      return res.status(200).json({
+        message: "Post liked successfully",
+        liked: true,
+        likeCount, // ✅ Send back total likes
+      });
+    }
+  } catch (error) {
+    console.error("Toggle like error:", error);
+    res.status(500).json({
+      message: "Error toggling like",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   createPostController,
   getPostController,
   getPostDetailsController,
   deletePostController,
-  updatePostController, // You forgot this!
+  updatePostController,
+  toggleLikeController,
 };

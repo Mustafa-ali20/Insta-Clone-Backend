@@ -9,6 +9,7 @@ const {
   getPostDetailsController,
   deletePostController,
   updatePostController,
+  toggleLikeController,
 } = require("../controllers/post.controller");
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -36,5 +37,11 @@ postRouter.patch(
   authorizePostOwner,
   updatePostController,
 );
+
+/**
+ * @route POST/ /api/posts/like/:postid
+ * @description like a post with the id provided in the request params
+ */
+postRouter.post("/like/:postId", authenticateToken, toggleLikeController);
 
 module.exports = postRouter;
