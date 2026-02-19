@@ -209,21 +209,22 @@ async function rejectFollowRequestController(req, res) {
 // 5️⃣ Get Pending Follow Requests Controller (THIS FIXES YOUR ISSUE!)
 async function getPendingFollowRequestsController(req, res) {
   try {
-    const userId = req.user.id; // ✅ Changed
+    const userId = req.user.id; 
 
     const pendingRequests = await followModel
       .find({
-        followee: userId, // ✅ Using ID
+        followee: userId, 
         status: "pending",
       })
-      .populate("follower", "username profileImage") // ✅ NOW THIS WORKS!
+      .populate("follower", "username fullName profileImage") 
       .sort({ createdAt: -1 });
 
     res.status(200).json({
       message: "Pending follow requests fetched successfully",
       requests: pendingRequests.map((req) => ({
-        username: req.follower.username, // ✅ NOW APPEARS!
-        profileImage: req.follower.profileImage, // ✅ NOW APPEARS!
+        username: req.follower.username, 
+        profileImage: req.follower.profileImage, 
+        fullName: req.follower.fullName,
         requestedAt: req.createdAt,
         requestId: req._id,
       })),

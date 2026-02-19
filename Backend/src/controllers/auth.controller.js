@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 async function registerController(req, res) {
-  const { email, password, username, bio, profileImage } = req.body;
+  const { email, password, username, bio, fullName, profileImage } = req.body;
   const isUserAlreadyExists = await userModel.findOne({
     $or: [{ username }, { email }],
   });
@@ -21,8 +21,9 @@ async function registerController(req, res) {
 
   const hash = await bcrypt.hash(password, 10);
 
-  const user = userModel.create({
+  const user = await userModel.create({
     username,
+    fullName,
     email,
     bio,
     profileImage,
@@ -30,7 +31,12 @@ async function registerController(req, res) {
   });
 
   const token = jwt.sign(
-    { id: user._id, email: user.email, username: user.username },
+    {
+      id: user._id,
+      email: user.email,
+      username: user.username,
+      fullName: user.fullName,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "1d" },
   );
@@ -46,6 +52,7 @@ async function registerController(req, res) {
     user: {
       email: user.email,
       username: user.username,
+      fullName: user.fullName,
       bio: user.bio,
       profileImage: user.profileImage,
     },
@@ -74,7 +81,12 @@ async function loginController(req, res) {
   }
 
   const token = jwt.sign(
-    { id: user._id, email: user.email, username: user.username },
+    {
+      id: user._id,
+      email: user.email,
+      username: user.username,
+      fullName: user.fullName,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "1d" },
   );
@@ -90,6 +102,7 @@ async function loginController(req, res) {
     user: {
       email: user.email,
       username: user.username,
+      fullName: user.fullName,
       bio: user.bio,
       profileImage: user.profileImage,
     },

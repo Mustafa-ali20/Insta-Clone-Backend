@@ -53,6 +53,7 @@ async function getPostController(req, res) {
   try {
     const posts = await postModel
       .find({ user: req.user.id })
+      .populate("user", "username fullName profileImage")
       .sort({ createdAt: -1 }); // Newest first
 
     res.status(200).json({

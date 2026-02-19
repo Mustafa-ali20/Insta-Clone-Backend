@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -17,6 +18,16 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios
+      .post(
+        "http://localhost:3000/api/auth/login",
+        formData,
+        { withCredentials: true }, // config object
+      )
+      .then((res) => {
+        console.log(res.data);
+      });
+
     navigate("/profile");
   };
 
