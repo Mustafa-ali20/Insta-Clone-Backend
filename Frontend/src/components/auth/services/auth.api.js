@@ -1,23 +1,21 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/auth",
+  baseURL: "http://localhost:3000",
   withCredentials: true,
 });
 
 export async function register(username, fullName, password, email) {
   try {
-    const response = await axios.post(
-      "/register",
+    const response = await api.post(  // ✅ Changed from axios to api
+      "/api/auth/register",
       {
         username,
         fullName,
         password,
         email,
-      },
-      {
-        withCredentials: true,
-      },
+      }
+      // No need for withCredentials here - it's in the api instance!
     );
     return response.data;
   } catch (err) {
@@ -30,20 +28,18 @@ export async function register(username, fullName, password, email) {
 
 export async function login(email, password) {
   try {
-    const response = await axios.post(
-      "/login",
+    const response = await api.post(  // ✅ Changed from axios to api
+      "/api/auth/login",
       {
         email,
         password,
-      },
-      {
-        withCredentials: true,
-      },
+      }
+      // No need for withCredentials here - it's in the api instance!
     );
     return response.data;
   } catch (err) {
-    if (err.response?.status === 409) {
-      throw new Error("Invalid user");
+    if (err.response?.status === 401) {  // ✅ Changed from 409 to 401
+      throw new Error("Invalid credentials");
     }
     throw err;
   }
@@ -51,11 +47,11 @@ export async function login(email, password) {
 
 export async function getMe() {
   try {
-    const response = await axios.get("/get-me");
+    const response = await api.get("/api/auth/get-me");  // ✅ Changed from axios to api
     return response.data;
   } catch (err) {
-     if (err.response?.status === 409) {
-      throw new Error("Invalid user");
+    if (err.response?.status === 401) {  // ✅ Changed from 409 to 401
+      throw new Error("Not authenticated");
     }
     throw err;
   }

@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
-import { AuthProvider } from "./components/auth/auth.context";
+import { AuthProvider } from "./components/auth/auth.context"; 
 
 function App() {
   return (

@@ -1,26 +1,26 @@
 import React from 'react'
-import { Menu, Heart, MessageCircle } from 'lucide-react'
+import { Settings, ChevronDown } from 'lucide-react'
 
 const Header = ({ username }) => {
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white border-b border-ig-gray-300 z-40 lg:hidden">
-      <div className="flex items-center justify-between px-4 py-2">
-        <button className="p-2">
-          <Menu className="w-6 h-6" />
+    <header className="fixed top-0 left-0 right-0 bg-[#0B1014] border-b border-zinc-800 z-40 lg:hidden">
+      <div className="flex items-center justify-between px-4 py-3">
+        <button className="p-1">
+          <Settings className="w-6 h-6 text-white" />
         </button>
         
-        <h1 className="text-base font-semibold">{username}</h1>
-        
-        <div className="flex items-center gap-4">
-          <button className="p-2 relative">
-            <Heart className="w-6 h-6" />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-          </button>
-          <button className="p-2 relative">
-            <MessageCircle className="w-6 h-6" />
-            <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-          </button>
+        <div className="flex items-center gap-1">
+          <h1 className="text-base font-normal text-white">{username}</h1>
+          <ChevronDown className="w-4 h-4 text-white" />
         </div>
+        
+        <button className="p-1">
+          <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="1" fill="currentColor"/>
+            <circle cx="19" cy="12" r="1" fill="currentColor"/>
+            <circle cx="5" cy="12" r="1" fill="currentColor"/>
+          </svg>
+        </button>
       </div>
     </header>
   )

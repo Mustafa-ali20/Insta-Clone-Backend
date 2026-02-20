@@ -8,14 +8,14 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (email, password) => {
-    setLoading(true); // this will keep the loading state true until the data is recevied and then the state will go false
+    setLoading(true); // this will keep the loading state true until the data is recevied
     try {
       const response = await login(email, password);
       setUser(response.user);
     } catch (error) {
-      console.log(error);
+      console.log("Login error:", error);
     } finally {
-      setLoading(false);
+      setLoading(false); // then the state will go false
     }
   };
 

@@ -1,35 +1,35 @@
 import React from 'react'
-import { Heart, MessageCircle, Film } from 'lucide-react'
+import { Heart, MessageCircle, Film, Grid3x3 } from 'lucide-react'
 
 const ProfilePosts = ({ posts, activeTab }) => {
   if (activeTab !== 'posts') {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <div className="w-16 h-16 rounded-full border-2 border-ig-gray-900 flex items-center justify-center mb-4">
-          {activeTab === 'reels' && <Film className="w-8 h-8" />}
-          {activeTab === 'saved' && <Heart className="w-8 h-8" />}
-          {activeTab === 'tagged' && <MessageCircle className="w-8 h-8" />}
+        <div className="w-20 h-20 rounded-full border-2 border-zinc-700 flex items-center justify-center mb-4">
+          {activeTab === 'reels' && <Film className="w-10 h-10 text-white" />}
+          {activeTab === 'saved' && <Heart className="w-10 h-10 text-white" />}
+          {activeTab === 'tagged' && <Grid3x3 className="w-10 h-10 text-white" />}
         </div>
-        <h3 className="text-2xl font-light mb-2">
+        <h3 className="text-2xl font-light mb-2 text-white">
           {activeTab === 'reels' && 'No Reels Yet'}
           {activeTab === 'saved' && 'No Saved Posts'}
-          {activeTab === 'tagged' && 'No Tagged Posts'}
+          {activeTab === 'tagged' && 'No Posts'}
         </h3>
-        <p className="text-ig-gray-500 text-sm">
-          {activeTab === 'reels' && 'Create your first reel'}
-          {activeTab === 'saved' && 'Save posts you like'}
-          {activeTab === 'tagged' && 'Photos and videos of you'}
+        <p className="text-zinc-500 text-sm">
+          {activeTab === 'reels' && 'Share your first reel'}
+          {activeTab === 'saved' && 'Save photos and videos that you want to see again'}
+          {activeTab === 'tagged' && 'When people tag you in photos, they\'ll appear here'}
         </p>
       </div>
     )
   }
 
   return (
-    <div className="profile-grid">
+    <div className="grid grid-cols-3 gap-1 lg:gap-6">
       {posts.map((post) => (
         <div 
           key={post.id} 
-          className="relative aspect-square bg-ig-gray-100 cursor-pointer group overflow-hidden"
+          className="relative aspect-square bg-zinc-900 cursor-pointer group overflow-hidden"
         >
           <img 
             src={post.image} 
@@ -37,12 +37,14 @@ const ProfilePosts = ({ posts, activeTab }) => {
             className="w-full h-full object-cover"
           />
           
+          {/* Video Indicator */}
           {post.type === 'video' && (
             <div className="absolute top-2 right-2">
               <Film className="w-5 h-5 text-white drop-shadow-lg" fill="white" />
             </div>
           )}
 
+          {/* Carousel Indicator */}
           {post.isCarousel && (
             <div className="absolute top-2 right-2">
               <svg className="w-5 h-5 text-white drop-shadow-lg" fill="white" viewBox="0 0 48 48">
@@ -51,7 +53,8 @@ const ProfilePosts = ({ posts, activeTab }) => {
             </div>
           )}
 
-          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-200 flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100">
+          {/* Hover Overlay */}
+          <div className="absolute inset-0 bg-black/60 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-200 flex items-center justify-center gap-6 opacity-0 group-hover:opacity-100">
             <div className="flex items-center gap-2 text-white font-semibold">
               <Heart className="w-6 h-6" fill="white" />
               <span>{post.likes}</span>

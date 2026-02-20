@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../hooks/useAuth";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
+  const { handleLogin, loading } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
@@ -18,35 +20,27 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(
-        "http://localhost:3000/api/auth/login",
-        formData,
-        { withCredentials: true }, // config object
-      )
-      .then((res) => {
-        console.log(res.data);
-      });
-
+    handleLogin(formData.email, formData.password).then((res) => {
+      console.log(res);
+    });
     navigate("/profile");
   };
 
-  const isFormValid =
-    formData.username.length > 0 && formData.password.length > 0;
+  const isFormValid = formData.email.length > 0 && formData.password.length > 0;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
-      {/* Username/Email Input */}
+      {/* Email Input */}
       <div>
         <input
-          type="text"
-          name="username"
+          type="email"
+          name="email"
           placeholder="Mobile number, username or email"
-          value={formData.username}
+          value={formData.email}
           onChange={handleChange}
-          autoComplete="username"
+          autoComplete="email"
           required
-          className="w-full px-4 py-4 border border-[#4d5a61] rounded-xl text-white text-sm focus:outline-none focus:border-[#3A4952] transition-colors"
+          className="w-full px-4 py-4 border border-[#4d5a61] rounded-xl text-white text-sm focus:outline-none focus:border-[#5f717c] transition-colors"
         />
       </div>
 

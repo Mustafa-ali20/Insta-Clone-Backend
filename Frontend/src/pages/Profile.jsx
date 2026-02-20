@@ -18,7 +18,7 @@ const Profile = () => {
     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop',
     posts: '3',
     followers: '167',
-    following: '417',
+    following: '421',
   }
 
   const storiesData = [
@@ -53,31 +53,10 @@ const Profile = () => {
       type: 'photo',
       isCarousel: true
     },
-    { 
-      id: 4, 
-      image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&h=600&fit=crop',
-      likes: '178',
-      comments: '8',
-      type: 'photo'
-    },
-    { 
-      id: 5, 
-      image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&h=600&fit=crop',
-      likes: '203',
-      comments: '15',
-      type: 'photo'
-    },
-    { 
-      id: 6, 
-      image: 'https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?w=600&h=600&fit=crop',
-      likes: '145',
-      comments: '7',
-      type: 'photo'
-    },
   ]
 
   return (
-    <div className="min-h-screen bg-white lg:bg-ig-gray-50">
+    <div className="min-h-screen bg-[#0B1014]">
       <Sidebar />
       <Header username={profileData.username} />
 
@@ -85,10 +64,6 @@ const Profile = () => {
         <div className="max-w-4xl mx-auto lg:py-8">
           <div className="animate-fade-in">
             <ProfileHeader profile={profileData} />
-          </div>
-
-          <div className="animate-fade-in animate-delay-100">
-            <ProfileStats profile={profileData} />
           </div>
 
           <div className="animate-fade-in animate-delay-200">
@@ -99,7 +74,7 @@ const Profile = () => {
             <ProfileTabs onTabChange={setActiveTab} />
           </div>
 
-          <div className="px-4 lg:px-0 py-1 animate-fade-in animate-delay-300">
+          <div className="px-4 lg:px-0 py-4 animate-fade-in animate-delay-300">
             <ProfilePosts posts={postsData} activeTab={activeTab} />
           </div>
         </div>

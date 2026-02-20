@@ -18,10 +18,10 @@ const Sidebar = () => {
 
   const menuItems = [
     { id: 'home', icon: Home, label: 'Home', path: '/profile' },
+    { id: 'reels', icon: Film, label: 'Reels', path: '#' },
+    { id: 'messages', icon: MessageCircle, label: 'Messages', path: '#', badge: 2 },
     { id: 'search', icon: Search, label: 'Search', path: '#' },
     { id: 'explore', icon: Compass, label: 'Explore', path: '#' },
-    { id: 'reels', icon: Film, label: 'Reels', path: '#' },
-    { id: 'messages', icon: MessageCircle, label: 'Messages', path: '#' },
     { id: 'notifications', icon: Heart, label: 'Notifications', path: '#' },
     { id: 'create', icon: PlusSquare, label: 'Create', path: '#' },
     { id: 'profile', icon: User, label: 'Profile', path: '/profile' },
@@ -35,39 +35,50 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 border-r border-ig-gray-300 bg-white z-50 hidden lg:block">
-      <div className="flex flex-col h-full p-3">
-        <div className="px-3 py-6 mb-4">
-          <img 
-            src="/assets/instagram-logo.png" 
-            alt="Instagram" 
-            className="h-8 w-auto"
-          />
-        </div>
+    <aside className="fixed left-0 top-0 h-screen w-20 lg:w-64 border-r border-zinc-800 bg-[#0B1014] z-50 hidden md:flex flex-col">
+      <div className="flex flex-col h-full p-2 lg:p-4">
+        {/* Logo */}
+          <div className="px-2 lg:px-3 py-3 mb-4">
+            <div className="lg:block hidden">
+              <img src="/images/logo.png" alt="Logo" className="h-12 w-auto" />
+            </div>
+            <div className="lg:hidden flex justify-center">
+              <img src="/images/logo-mobile.png" alt="Logo" className="w-7 h-7" />
+            </div>
+          </div>
 
-        <nav className="flex-1">
-          <ul className="space-y-1">
+          {/* Navigation Menu - Centered */}
+        <nav className="flex-1 flex items-center">
+          <ul className="space-y-1 w-full">
             {menuItems.map((item) => (
               <li key={item.id}>
                 <button
                   onClick={() => handleNavigation(item)}
-                  className={`w-full flex items-center gap-4 px-3 py-3 rounded-lg transition-all duration-200 hover:bg-ig-gray-50
-                    ${activeItem === item.id ? 'font-bold' : 'font-normal'}
+                  className={`w-full flex items-center justify-center lg:justify-start gap-4 px-3 py-3 rounded-lg transition-all duration-200 hover:bg-zinc-900 relative
+                    ${activeItem === item.id ? 'text-white' : 'text-zinc-400'}
                   `}
                 >
                   <item.icon 
-                    className={`w-6 h-6 ${activeItem === item.id ? 'stroke-[2.5]' : 'stroke-[2]'}`} 
+                    className={`w-7 h-7 ${activeItem === item.id ? 'stroke-[2]' : 'stroke-[1.5]'}`} 
                   />
-                  <span className="text-base">{item.label}</span>
+                  <span className={`text-base hidden lg:block ${activeItem === item.id ? 'font-semibold' : 'font-normal'}`}>
+                    {item.label}
+                  </span>
+                  {item.badge && (
+                    <span className="absolute top-2 left-6 lg:left-8 w-5 h-5 bg-red-600 text-white text-xs rounded-full flex items-center justify-center font-semibold">
+                      {item.badge}
+                    </span>
+                  )}
                 </button>
               </li>
             ))}
           </ul>
         </nav>
 
-        <button className="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-ig-gray-50 transition-all duration-200">
-          <Menu className="w-6 h-6" />
-          <span className="text-base">More</span>
+        {/* More Button */}
+        <button className="flex items-center justify-center lg:justify-start gap-4 px-3 py-3 rounded-lg hover:bg-zinc-900 transition-all duration-200 text-zinc-400">
+          <Menu className="w-7 h-7" />
+          <span className="text-base hidden lg:block">More</span>
         </button>
       </div>
     </aside>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Input from "../common/Input";
-import Button from "../common/Button";
+import Input from "../../common/Input";
+import Button from "../../common/Button";
 import axios from "axios";
 
 const RegisterForm = () => {
@@ -22,21 +22,6 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    axios
-      .post(
-        "http://localhost:3000/api/auth/register",
-        formData, // request body
-        { withCredentials: true }, // config object
-      )
-      .then((res) => {
-        console.log(res.data);
-        // navigate("/profile");
-      })
-      .catch((err) => {
-        console.error(err);
-        // Show error to user
-      });
   };
 
   const isFormValid =
