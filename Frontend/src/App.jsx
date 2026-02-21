@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Profile from "./pages/Profile";
+import Login from "./UI/Login";
+import Register from "./UI/Register";
+import Profile from "./UI/Profile";
 import { AuthProvider } from "./components/auth/auth.context"; 
 
 function App() {

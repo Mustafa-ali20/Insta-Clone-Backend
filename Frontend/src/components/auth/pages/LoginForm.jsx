@@ -9,7 +9,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const { handleLogin, loading } = useAuth();
+  const { handleLogin, loading, user } = useAuth();
 
   const handleChange = (e) => {
     setFormData({
