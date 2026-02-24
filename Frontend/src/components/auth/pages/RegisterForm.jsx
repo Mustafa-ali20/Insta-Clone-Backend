@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../common/Input";
 import Button from "../../common/Button";
 import axios from "axios";
+import { useAuth } from "../hooks/useAuth";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ const RegisterForm = () => {
     fullName: "",
   });
 
+  const { loading, handleRegister } = useAuth();
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -20,15 +23,23 @@ const RegisterForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await handleRegister(
+      formData.email,
+      formData.fullName,
+      formData.password,
+      formData.username,
+    ).then((res) => {
+      console.log(res);
+    });
   };
 
   const isFormValid =
     formData.email.length > 0 &&
-    formData.password.length > 0 &&
-    formData.fullName.length > 0 &&
-    formData.username.length > 0;
+    formData.password.length > 7 &&
+    formData.fullName.length > 3 &&
+    formData.username.length > 3;
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

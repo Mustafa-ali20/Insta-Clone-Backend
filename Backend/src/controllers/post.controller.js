@@ -190,6 +190,15 @@ async function toggleLikeController(req, res) {
   }
 }
 
+async function getFeedController(req, res) {
+  const posts = await postModel.find().populate("user");
+
+  res.status(200).json({
+    message: "Post fetched successfully",
+    posts,
+  });
+}
+
 module.exports = {
   createPostController,
   getPostController,
@@ -197,4 +206,5 @@ module.exports = {
   deletePostController,
   updatePostController,
   toggleLikeController,
+  getFeedController,
 };
