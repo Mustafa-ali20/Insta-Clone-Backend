@@ -2,6 +2,9 @@ const userModel = require("../models/user.model");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const postModel = require("../models/post.model");
+const likeModel = require("../models/like.model");
+const followModel = require("../models/follow.model");
 
 async function registerController(req, res) {
   const { email, password, username, bio, fullName, profileImage } = req.body;
@@ -112,17 +115,84 @@ async function loginController(req, res) {
 }
 
 async function getMeController(req, res) {
-  const userId = req.user.id;
+  try {
+    const userId = req.user.id;
 
-  const user = await userModel.findById(userId);
-  res.status(200).json({
-    user: {
-      username: user.username,
-      fullName: user.fullName,
-      bio: user.bio,
-      profileImage: user.profileImage,
-    },
+    // Get user details
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    // Get user's posts
+    const posts = await postModel
+      .find({ user: userId })
+      .populate("user", "username fullName profileImage")
+      .sort({ createdAt: -1 }) // Newest first
+      .lean();
+
+    // Add like count and isLiked to each post
+    const postsWithLikes = await Promise.all(
+      posts.map(async (post) => {
+        const isLiked = await likeModel.findOne({
+          user: userId,
+          post: post._id,
+        });
+
+        post.isLiked = !!isLiked;
+        post.likeCount = await likeModel.countDocuments({ post: post._id });
+
+        return post;
+      }),
+    );
+
+    // Get follower and following counts
+    const followerCount = await followModel.countDocuments({
+      followee: userId,
+      status: "accepted",
+    });
+
+    const followingCount = await followModel.countDocuments({
+      follower: userId,
+      status: "accepted",
+    });
+
+    res.status(200).json({
+      user: {
+        id: user._id,
+        username: user.username,
+        fullName: user.fullName,
+        bio: user.bio,
+        profileImage: user.profileImage,
+        isPrivate: user.isPrivate,
+        postCount: posts.length, // ✅ Total posts
+        followerCount, // ✅ Total followers
+        followingCount, // ✅ Total following
+      },
+      posts: postsWithLikes, // ✅ User's posts with like info
+    });
+  } catch (error) {
+    console.error("Get me error:", error);
+    res.status(500).json({
+      message: "Error fetching user data",
+      error: error.message,
+    });
+  }
+}
+
+async function logoutController(req, res) {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,      // true in production
+    sameSite: "none",  // if using cross-domain
+  });
+
+  return res.status(200).json({
+    message: "User logged out successfully",
   });
 }
 
-module.exports = { loginController, registerController, getMeController };
+module.exports = { loginController, registerController, getMeController, logoutController };

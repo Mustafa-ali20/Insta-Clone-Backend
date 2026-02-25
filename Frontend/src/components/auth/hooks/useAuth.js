@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../auth.context";
-import { login, register } from "../services/auth.api";
+import { getMe, login, register } from "../services/auth.api";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -30,11 +30,26 @@ export const useAuth = () => {
     }
   };
 
+  const handleGetProfile = async () => {
+    setLoading(true);
+   try {
+      const response = await getMe();  
+      setUser(response.user);  
+      return { success: true, data: response };  
+    } catch (error) {
+      console.error("Get profile error:", error);
+      return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     user,
     loading,
     handleLogin,
     handleRegister,
+    handleGetProfile,
   };
 };
 

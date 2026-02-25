@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'  // ✅ Add useLocation
 import { 
   Home, 
   Search, 
@@ -14,10 +14,11 @@ import {
 
 const Sidebar = () => {
   const navigate = useNavigate()
-  const [activeItem, setActiveItem] = useState('profile')
+  const location = useLocation()  // ✅ Get current location
+  const [activeItem, setActiveItem] = useState('')
 
   const menuItems = [
-    { id: 'home', icon: Home, label: 'Home', path: '/profile' },
+    { id: 'home', icon: Home, label: 'Home', path: '/feed' },
     { id: 'reels', icon: Film, label: 'Reels', path: '#' },
     { id: 'messages', icon: MessageCircle, label: 'Messages', path: '#', badge: 2 },
     { id: 'search', icon: Search, label: 'Search', path: '#' },
@@ -27,9 +28,18 @@ const Sidebar = () => {
     { id: 'profile', icon: User, label: 'Profile', path: '/profile' },
   ]
 
+  // ✅ Update active item based on current path
+  useEffect(() => {
+    const currentPath = location.pathname
+    const activeMenuItem = menuItems.find(item => item.path === currentPath)
+    if (activeMenuItem) {
+      setActiveItem(activeMenuItem.id)
+    }
+  }, [location.pathname])  // Re-run when path changes
+
   const handleNavigation = (item) => {
-    setActiveItem(item.id)
     if (item.path !== '#') {
+      setActiveItem(item.id)
       navigate(item.path)
     }
   }
@@ -38,16 +48,16 @@ const Sidebar = () => {
     <aside className="fixed left-0 top-0 h-screen w-20 lg:w-64 border-r border-zinc-800 bg-[#0B1014] z-50 hidden md:flex flex-col">
       <div className="flex flex-col h-full p-2 lg:p-4">
         {/* Logo */}
-          <div className="px-2 lg:px-3 py-3 mb-4">
-            <div className="lg:block hidden">
-              <img src="/images/logo.png" alt="Logo" className="h-12 w-auto" />
-            </div>
-            <div className="lg:hidden flex justify-center">
-              <img src="/images/logo-mobile.png" alt="Logo" className="w-7 h-7" />
-            </div>
+        <div className="px-2 lg:px-3 py-3 mb-4">
+          <div className="lg:block hidden">
+            <img src="/images/logo.png" alt="Logo" className="h-12 w-auto" />
           </div>
+          <div className="lg:hidden flex justify-center">
+            <img src="/images/logo-mobile.png" alt="Logo" className="w-7 h-7" />
+          </div>
+        </div>
 
-          {/* Navigation Menu - Centered */}
+        {/* Navigation Menu - Centered */}
         <nav className="flex-1 flex items-center">
           <ul className="space-y-1 w-full">
             {menuItems.map((item) => (

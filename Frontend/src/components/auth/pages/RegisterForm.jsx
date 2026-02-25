@@ -33,6 +33,7 @@ const RegisterForm = () => {
     ).then((res) => {
       console.log(res);
     });
+    navigate("/feed");
   };
 
   const isFormValid =

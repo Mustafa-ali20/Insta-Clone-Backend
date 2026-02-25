@@ -130,7 +130,7 @@ const Post = ({ user, post, onLike }) => {
 
         {/* Caption */}
         <div className="text-sm leading-relaxed">
-          <span className="text-white font-semibold mr-1.5">
+          <span className="text-white text-base font-semibold mr-1.5">
             {post.user.username}
           </span>
           <span className="text-white">{post.caption}</span>

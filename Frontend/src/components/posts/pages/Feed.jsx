@@ -1,6 +1,7 @@
 import React from "react";
 import { usePost } from "../hooks/usePost";
 import Post from "../UI/Post";
+import Sidebar from "../../layout/Sidebar";
 
 const Feed = () => {
   const stories = [
@@ -28,6 +29,10 @@ const Feed = () => {
 
   return (
     <div className="min-h-screen bg-[#0B1014] pb-20 lg:pb-0">
+      <div>
+        <Sidebar />
+      </div>
+
       {/* Stories Section */}
       <div className="border-b border-zinc-800 py-4">
         <div className="w-full max-w-xl mx-auto px-2 sm:px-4">
