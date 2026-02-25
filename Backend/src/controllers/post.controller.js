@@ -191,7 +191,23 @@ async function toggleLikeController(req, res) {
 }
 
 async function getFeedController(req, res) {
-  const posts = await postModel.find().populate("user");
+  const userId = req.user.id;
+  const posts = await Promise.all(
+    (await postModel.find().populate("user").lean()).map(async (post) => {
+      const isLiked = await likeModel.findOne({
+        user: userId,
+        post: post._id,
+      });
+      post.isLiked = !!isLiked;
+
+      post.likeCount = await likeModel.countDocuments({ post: post._id });
+      return post;
+    }),
+  );
+
+  //you cannot add stuff in mongoose object thats why u need to add lean()
+  //what lean does is that it will allow to add new properrty such as isLiked in this case
+  //!! will convert it into boolean or u can write Boolean(isLiked)
 
   res.status(200).json({
     message: "Post fetched successfully",
