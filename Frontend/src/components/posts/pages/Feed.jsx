@@ -2,6 +2,7 @@ import React from "react";
 import { usePost } from "../hooks/usePost";
 import Post from "../UI/Post";
 import Sidebar from "../../layout/Sidebar";
+import MobileNav from "../../layout/MobileNav";
 
 const Feed = () => {
   const stories = [
@@ -89,6 +90,8 @@ const Feed = () => {
           />
         ))}
       </div>
+
+      <MobileNav />
     </div>
   );
 };

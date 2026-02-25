@@ -1,48 +1,58 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'  // ✅ Add useLocation
-import { 
-  Home, 
-  Search, 
-  Compass, 
-  Film, 
-  MessageCircle, 
-  Heart, 
-  PlusSquare, 
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Home,
+  Search,
+  Compass,
+  Film,
+  MessageCircle,
+  Heart,
   Menu,
-  User
-} from 'lucide-react'
+  User,
+  Plus,
+} from "lucide-react";
+import { useUI } from "../posts/ui.context"; // ✅ adjust path as needed
 
 const Sidebar = () => {
-  const navigate = useNavigate()
-  const location = useLocation()  // ✅ Get current location
-  const [activeItem, setActiveItem] = useState('')
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState("");
+  const { openCreate } = useUI(); // ✅ grab openCreate from context
 
   const menuItems = [
-    { id: 'home', icon: Home, label: 'Home', path: '/feed' },
-    { id: 'reels', icon: Film, label: 'Reels', path: '#' },
-    { id: 'messages', icon: MessageCircle, label: 'Messages', path: '#', badge: 2 },
-    { id: 'search', icon: Search, label: 'Search', path: '#' },
-    { id: 'explore', icon: Compass, label: 'Explore', path: '#' },
-    { id: 'notifications', icon: Heart, label: 'Notifications', path: '#' },
-    { id: 'create', icon: PlusSquare, label: 'Create', path: '#' },
-    { id: 'profile', icon: User, label: 'Profile', path: '/profile' },
-  ]
+    { id: "home", icon: Home, label: "Home", path: "/feed" },
+    { id: "reels", icon: Film, label: "Reels", path: "#" },
+    {
+      id: "messages",
+      icon: MessageCircle,
+      label: "Messages",
+      path: "#",
+    },
+    { id: "search", icon: Search, label: "Search", path: "#" },
+    { id: "explore", icon: Compass, label: "Explore", path: "#" },
+    { id: "notifications", icon: Heart, label: "Notifications", path: "#" },
+    { id: "create", icon: Plus, label: "Create", path: "#" }, // ✅ stays #
+    { id: "profile", icon: User, label: "Profile", path: "/profile" },
+  ];
 
-  // ✅ Update active item based on current path
   useEffect(() => {
-    const currentPath = location.pathname
-    const activeMenuItem = menuItems.find(item => item.path === currentPath)
+    const currentPath = location.pathname;
+    const activeMenuItem = menuItems.find((item) => item.path === currentPath);
     if (activeMenuItem) {
-      setActiveItem(activeMenuItem.id)
+      setActiveItem(activeMenuItem.id);
     }
-  }, [location.pathname])  // Re-run when path changes
+  }, [location.pathname]);
 
   const handleNavigation = (item) => {
-    if (item.path !== '#') {
-      setActiveItem(item.id)
-      navigate(item.path)
+    if (item.id === "create") {
+      openCreate(); // ✅ open the modal
+      return;
     }
-  }
+    if (item.path !== "#") {
+      setActiveItem(item.id);
+      navigate(item.path);
+    }
+  };
 
   return (
     <aside className="fixed left-0 top-0 h-screen w-20 lg:w-64 border-r border-zinc-800 bg-[#0B1014] z-50 hidden md:flex flex-col">
@@ -57,7 +67,7 @@ const Sidebar = () => {
           </div>
         </div>
 
-        {/* Navigation Menu - Centered */}
+        {/* Navigation */}
         <nav className="flex-1 flex items-center">
           <ul className="space-y-1 w-full">
             {menuItems.map((item) => (
@@ -65,13 +75,15 @@ const Sidebar = () => {
                 <button
                   onClick={() => handleNavigation(item)}
                   className={`w-full flex items-center justify-center lg:justify-start gap-4 px-3 py-3 rounded-lg transition-all duration-200 hover:bg-zinc-900 relative
-                    ${activeItem === item.id ? 'text-white' : 'text-zinc-400'}
+                    ${activeItem === item.id ? "text-white" : "text-zinc-400"}
                   `}
                 >
-                  <item.icon 
-                    className={`w-7 h-7 ${activeItem === item.id ? 'stroke-[2]' : 'stroke-[1.5]'}`} 
+                  <item.icon
+                    className={`w-7 h-7 ${activeItem === item.id ? "stroke-[2]" : "stroke-[1.5]"}`}
                   />
-                  <span className={`text-base hidden lg:block ${activeItem === item.id ? 'font-semibold' : 'font-normal'}`}>
+                  <span
+                    className={`text-base hidden lg:block ${activeItem === item.id ? "font-semibold" : "font-normal"}`}
+                  >
                     {item.label}
                   </span>
                   {item.badge && (
@@ -92,7 +104,7 @@ const Sidebar = () => {
         </button>
       </div>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
