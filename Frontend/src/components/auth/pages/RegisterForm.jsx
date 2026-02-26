@@ -26,10 +26,10 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await handleRegister(
-      formData.email,
-      formData.fullName,
-      formData.password,
       formData.username,
+      formData.fullName,
+      formData.email,
+      formData.password,
     ).then((res) => {
       console.log(res);
     });
@@ -47,12 +47,12 @@ const RegisterForm = () => {
       {/* Mobile number or email */}
       <div>
         <label className="text-white text-base font-normal mb-2 block">
-          Mobile number or email
+          Email
         </label>
         <input
           type="text"
           name="email"
-          placeholder="Mobile number or email"
+          placeholder="Email"
           value={formData.email}
           onChange={handleChange}
           required

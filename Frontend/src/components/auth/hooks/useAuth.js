@@ -32,10 +32,10 @@ export const useAuth = () => {
 
   const handleGetProfile = async () => {
     setLoading(true);
-   try {
-      const response = await getMe();  
-      setUser(response.user);  
-      return { success: true, data: response };  
+    try {
+      const response = await getMe();
+      setUser(response.user);
+      return { success: true, data: response };
     } catch (error) {
       console.error("Get profile error:", error);
       return { success: false, error: error.message };

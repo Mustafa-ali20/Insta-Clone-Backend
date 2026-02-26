@@ -5,13 +5,13 @@ const api = axios.create({
   withCredentials: true,
 });
 
-export async function register(username, fullName, password, email) {
+export async function register(username, fullName, email, password) {
   try {
     const response = await api.post("/api/auth/register", {
       username,
       fullName,
-      password,
       email,
+      password,
     });
     return response.data;
   } catch (err) {

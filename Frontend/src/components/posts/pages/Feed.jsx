@@ -22,10 +22,14 @@ const Feed = () => {
     },
   ];
 
-  const { feed, loading, handleLike, handleUnLike } = usePost();
+  const { feed, loading, handleLikeUnlikePost } = usePost();
 
-  if (loading || !feed) {
-    return <main>Loading ...</main>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0B1014] flex items-center justify-center">
+        <div className="text-white text-lg">Loading Feed...</div>
+      </div>
+    );
   }
 
   return (
@@ -79,16 +83,23 @@ const Feed = () => {
 
       {/* Posts Feed */}
       <div className="w-full max-w-xl mx-auto">
-        {feed.map((post, id) => (
-          <Post
-            key={id}
-            user={post.user}
-            post={post}
-            loading={loading}
-            handleLike={handleLike}
-            handleUnLike={handleUnLike}
-          />
-        ))}
+        {feed.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <p className="text-zinc-500 text-sm">
+              No posts yet. Be the first to share!
+            </p>
+          </div>
+        ) : (
+          feed.map((post, id) => (
+            <Post
+              key={id}
+              user={post.user}
+              post={post}
+              loading={loading}
+              onLike={handleLikeUnlikePost}
+            />
+          ))
+        )}
       </div>
 
       <MobileNav />

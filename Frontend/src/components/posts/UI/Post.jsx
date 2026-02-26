@@ -121,13 +121,6 @@ const Post = ({ user, post, onLike }) => {
           </button>
         </div>
 
-        {/* Like count text (Instagram style) */}
-        {post.likeCount > 0 && (
-          <div className="text-white text-sm font-semibold mb-2">
-            {post.likeCount} {post.likeCount === 1 ? "like" : "likes"}
-          </div>
-        )}
-
         {/* Caption */}
         <div className="text-sm leading-relaxed">
           <span className="text-white text-base font-semibold mr-1.5">

@@ -10,6 +10,7 @@ import {
   Menu,
   User,
   Plus,
+  Instagram,
 } from "lucide-react";
 import { useUI } from "../posts/ui.context"; // ✅ adjust path as needed
 
@@ -60,7 +61,7 @@ const Sidebar = () => {
         {/* Logo */}
         <div className="px-2 lg:px-3 py-3 mb-4">
           <div className="lg:block hidden">
-            <img src="/images/logo.png" alt="Logo" className="h-12 w-auto" />
+            <Instagram size={35} color="white"/>
           </div>
           <div className="lg:hidden flex justify-center">
             <img src="/images/logo-mobile.png" alt="Logo" className="w-7 h-7" />
@@ -74,12 +75,12 @@ const Sidebar = () => {
               <li key={item.id}>
                 <button
                   onClick={() => handleNavigation(item)}
-                  className={`w-full flex items-center justify-center lg:justify-start gap-4 px-3 py-3 rounded-lg transition-all duration-200 hover:bg-zinc-900 relative
+                  className={`w-full flex items-center justify-center lg:justify-start gap-4 px-3 py-3 rounded-lg transition-all duration-200 hover:bg-zinc-300/20 relative
                     ${activeItem === item.id ? "text-white" : "text-zinc-400"}
                   `}
                 >
                   <item.icon
-                    className={`w-7 h-7 ${activeItem === item.id ? "stroke-[2]" : "stroke-[1.5]"}`}
+                    className={`w-7 h-7 ${activeItem === item.id ? "stroke-2" : "stroke-[1.5]"}`}
                   />
                   <span
                     className={`text-base hidden lg:block ${activeItem === item.id ? "font-semibold" : "font-normal"}`}
@@ -98,7 +99,7 @@ const Sidebar = () => {
         </nav>
 
         {/* More Button */}
-        <button className="flex items-center justify-center lg:justify-start gap-4 px-3 py-3 rounded-lg hover:bg-zinc-900 transition-all duration-200 text-zinc-400">
+        <button className="flex items-center justify-center lg:justify-start gap-4 px-3 py-3 rounded-lg hover:bg-zinc-300/20 transition-all duration-200 text-zinc-400">
           <Menu className="w-7 h-7" />
           <span className="text-base hidden lg:block">More</span>
         </button>

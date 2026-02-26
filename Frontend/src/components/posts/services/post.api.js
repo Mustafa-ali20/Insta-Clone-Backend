@@ -18,3 +18,8 @@ export async function createPost(imageFile, caption) {
 
   return response.data;
 }
+
+export async function toggleLikeUnlikePost(postId) {
+  const response = await api.post("/api/posts/like/" + postId);
+  return response.data;
+}
