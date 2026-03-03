@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: insta-backend-clone
+    runtime: node
+    rootDir: Backend
+    buildCommand: npm install
+    startCommand: node server.js
